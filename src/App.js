@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+// https://www.youtube.com/watch?v=06pWsB_hoD4&ab_channel=BenAwad
+import React, { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    // code to get data from backend database
+    fetch("/packages").then(response =>
+      response.json().then(data => {
+        console.log(data.packages);
+      })
+    );
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App"></div>
   );
 }
 
