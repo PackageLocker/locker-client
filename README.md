@@ -27,6 +27,12 @@ This is the front-end client application for the package locker system, which is
 
 	        root /var/www/locker-client;
 	        index index.html;
+
+          location /api {
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_pass         http://127.0.0.1:8000/;
+        }
 	}
 	```
 

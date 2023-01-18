@@ -4,7 +4,10 @@ import React, { useEffect } from "react";
 function App() {
   useEffect(() => {
     // code to get data from backend database
-    fetch("/packages").then(response =>
+    fetch("/api/packages", {
+      method: 'GET',
+      mode: 'cors'
+    }).then(response =>
       response.json().then(data => {
         console.log(data.packages);
       })
