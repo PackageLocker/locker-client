@@ -1,22 +1,24 @@
-// https://www.youtube.com/watch?v=06pWsB_hoD4&ab_channel=BenAwad
-import React, { useEffect } from "react";
+import React from "react";
+import Html5Qrcode from "./Html5Qrcode";
 
-function App() {
-  useEffect(() => {
-    // code to get data from backend database
-    fetch("/api/packages", {
-      method: 'GET',
-      mode: 'cors'
-    }).then(response =>
-      response.json().then(data => {
-        console.log(data.packages);
-      })
-    );
-  }, []);
+const App = () => {
+  // useEffect(() => {
+  //   // code to get data from backend database
+  //   fetch("/api/packages", {
+  //     method: 'GET',
+  //     mode: 'cors'
+  //   }).then(response =>
+  //     response.json().then(data => {
+  //       console.log(data.packages);
+  //     })
+  //   );
+  // }, []);
 
   return (
-    <div className="App">Hello World!</div>
+    <div>
+      <Html5Qrcode />
+    </div>
   );
-}
+};
 
 export default App;
