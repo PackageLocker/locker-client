@@ -22,7 +22,7 @@ This is the front-end client application for the package locker system, which is
 	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/locker.key -out /etc/nginx/ssl/locker.crt
 	```
 	
-4. Config Nginx
+4. Config Nginx (with the following config file)
 
 	```
 	sudo nano /etc/nginx/sites-available/locker-client
