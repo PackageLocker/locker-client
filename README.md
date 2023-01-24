@@ -13,8 +13,16 @@ This is the front-end client application for the package locker system, which is
 	sudo chmod 755 -R /var/www/locker-client/
 	sudo chown -R pi:www-data /var/www/locker-client/
 	```
-
-3. Create a config file (with the following configurations)
+	
+3. Create a ssl certificate
+	
+	```
+	sudo mkdir /etc/nginx/ssl
+	sudo chmod 700 /etc/nginx/ssl
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/locker.key -out /etc/nginx/ssl/locker.crt
+	```
+	
+4. Config Nginx
 
 	```
 	sudo nano /etc/nginx/sites-available/locker-client
@@ -22,28 +30,32 @@ This is the front-end client application for the package locker system, which is
 
 	```
 	server {
-	        listen 80;
-	        listen [::]:80;
+        	listen 443 ssl;
 
-	        root /var/www/locker-client;
-	        index index.html;
+        	ssl_certificate /etc/nginx/ssl/locker.crt;
+        	ssl_certificate_key /etc/nginx/ssl/locker.key;
 
-          location /api {
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_pass         http://127.0.0.1:8000/;
-        }
+        	location / {
+              	   root /var/www/locker-client;
+             	   index index.html;
+		}
+
+		location /api {
+			proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_pass         http://127.0.0.1:8000/;
+		}
 	}
 	```
 
-4. Unlink default config file and link new config file
+5. Unlink default config file and link new config file
 
 	```
 	sudo unlink /etc/nginx/sites-enabled/default
 	sudo ln -s /etc/nginx/sites-available/locker-client /etc/nginx/sites-enabled
 	```
 
-5. Test config and restart nginx
+6. Test config and restart nginx
 
 	```
 	sudo nginx -t
@@ -58,4 +70,4 @@ This is the front-end client application for the package locker system, which is
 
 2. Run `./deploy.sh`
 
-The site should now be accessible at `http://<pi-ip>`
+The site should now be accessible at `https://<pi-ip>`
