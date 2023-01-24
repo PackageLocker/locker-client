@@ -1,5 +1,3 @@
-// file = Html5QrcodePlugin.jsx
-
 import { Html5QrcodeScanner } from "html5-qrcode";
 import React from 'react';
 
@@ -23,16 +21,16 @@ class Html5QrcodePlugin extends React.Component {
         function createConfig(props) {
             var config = {};
             if (props.fps) {
-            config.fps = props.fps;
+                config.fps = props.fps;
             }
             if (props.qrbox) {
-            config.qrbox = props.qrbox;
+                config.qrbox = props.qrbox;
             }
             if (props.aspectRatio) {
-            config.aspectRatio = props.aspectRatio;
+                config.aspectRatio = props.aspectRatio;
             }
             if (props.disableFlip !== undefined) {
-            config.disableFlip = props.disableFlip;
+                config.disableFlip = props.disableFlip;
             }
             return config;
         }
@@ -41,7 +39,7 @@ class Html5QrcodePlugin extends React.Component {
         var verbose = this.props.verbose === true;
 
         // Suceess callback is required.
-        if (!(this.props.qrCodeSuccessCallback )) {
+        if (!(this.props.qrCodeSuccessCallback)) {
             throw "qrCodeSuccessCallback is required callback.";
         }
 
