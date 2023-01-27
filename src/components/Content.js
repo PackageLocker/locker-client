@@ -9,30 +9,34 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import { getPackges } from '../packages'
+import DeleteDiaglog from './DeleteDiaglog';
 
 const Content = () => {
   const navigate = useNavigate();
-  const [packages, setPackages] = useState(getPackges());
   const [alert, setAlert] = useState(false);
+  const [id, setId] = useState();
+  const [packages, setPackages] = useState(getPackges());
 
   const handleClick = (available, lockerId) => {
-    available ? navigate('new/' + lockerId) : setAlert(true);
+    if (available) {
+      navigate('new/' + lockerId);
+    }
+    else {
+      setAlert(true);
+      setId(lockerId);
+    }
   }
 
   const handleCancel = () => {
     setAlert(false);
+    setId();
   }
 
   const handleConfirm = () => {
     // TODO: delete entry
     setAlert(false);
+    setId();
   }
 
   return (
@@ -56,31 +60,17 @@ const Content = () => {
                 </ListItemButton>
               </ListItem>
               <Divider />
-              <Dialog
-                open={alert}
-                onClose={handleCancel}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  Delete entry from locker #{item.locker_id}?
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    Please confirm that this locker is empty.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleCancel}>Cancel</Button>
-                  <Button onClick={handleConfirm} color="error">
-                    Confirm
-                  </Button>
-                </DialogActions>
-              </Dialog>
+
             </div>
           )
         })}
       </List>
+      <DeleteDiaglog
+        id={id}
+        open={alert}
+        handleCancel={handleCancel}
+        handleConfirm={handleConfirm}
+      />
     </>
   )
 }
