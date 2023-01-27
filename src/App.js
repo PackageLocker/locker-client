@@ -1,24 +1,27 @@
-import React from "react";
-import Html5Qrcode from "./Html5Qrcode";
+import React from 'react'
+import Content from './components/Content';
+import Header from './components/Header'
 
 const App = () => {
-  // useEffect(() => {
-  //   // code to get data from backend database
-  //   fetch("/api/packages", {
-  //     method: 'GET',
-  //     mode: 'cors'
-  //   }).then(response =>
-  //     response.json().then(data => {
-  //       console.log(data.packages);
-  //     })
-  //   );
-  // }, []);
 
   return (
     <div>
-      <Html5Qrcode />
+      <Header text="Package Locker" root={true} />
+      <Content />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
+
+//   // useEffect(() => {
+//   //   // code to get data from backend database
+//   //   fetch("/api/packages", {
+//   //     method: 'GET',
+//   //     mode: 'cors'
+//   //   }).then(response =>
+//   //     response.json().then(data => {
+//   //       console.log(data.packages);
+//   //     })
+//   //   );
+//   // }, []);
