@@ -1,15 +1,13 @@
 import React from 'react'
 import Content from './components/Content';
 import Header from './components/Header'
-import { getPackges } from './packages';
 
 const App = () => {
-  const packages = getPackges();
 
   return (
     <div>
-      <Header />
-      <Content packages={packages} />
+      <Header text="Package Locker" root={true} />
+      <Content />
     </div>
   )
 }

@@ -5,8 +5,9 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import ErrorPage from "./ErrorPage"
-import PackageDetails from './PackageDetails';
+import ErrorPage from "./routes/ErrorPage"
+import PackageDetails from './routes/PackageDetails';
+import AddPackage from './routes/AddPackage';
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
     {
         path: "details/:lockerId",
         element: <PackageDetails />
-    }
+    },
+    {
+        path: "new/:lockerId",
+        element: <AddPackage />
+    },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
