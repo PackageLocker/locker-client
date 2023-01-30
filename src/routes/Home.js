@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
 import { getPackges } from '../packages'
-import DeleteDiaglog from './DeleteDiaglog';
+import DeleteDiaglog from '../components/DeleteDiaglog';
 
 const Content = () => {
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ const Content = () => {
   }
 
   const handleConfirm = () => {
-    // TODO: delete entry
     setAlert(false);
     setId();
   }
