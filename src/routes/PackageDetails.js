@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
-import { useParams } from "react-router-dom";
 import Header from '../components/Header';
-import { getDetails } from '../packages'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import DeleteDiaglog from '../components/DeleteDiaglog';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const PackageDetails = () => {
+  const { state } = useLocation();
+  const { data } = state;
+
   const [alert, setAlert] = useState(false);
   const [id, setId] = useState();
 
-  const { lockerId } = useParams();
-  const data = getDetails(lockerId);
   const navigate = useNavigate();
 
   const handleClick = (available, lockerId) => {
@@ -39,7 +38,7 @@ const PackageDetails = () => {
   }
   return (
     <div>
-      <Header text={"Locker " + lockerId} root={false} />
+      <Header text={`Locker ${data.locker_id}`} root={false} />
       <List>
         <ListItem>
           <ListItemText>Name: {data.name}</ListItemText>

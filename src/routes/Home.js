@@ -23,7 +23,7 @@ const Content = () => {
       try {
         const response = await api.get('/packages');
         setPackages(response.data);
-        console.log(packages);
+        console.log(response.data);
       } catch (err) {
         if (err.response) {
           // Not in the 200 response range
@@ -72,7 +72,16 @@ const Content = () => {
                   </IconButton>
                 }
               >
-                <ListItemButton disabled={item.available} onClick={() => navigate('details/' + item.locker_id)}>
+                <ListItemButton
+                  disabled={item.available}
+                  onClick={() => navigate(
+                    `details/${item.locker_id}`,
+                    {
+                      state: {
+                        data: item
+                      }
+                    })
+                  }>
                   <ListItemIcon>
                     {item.locker_id}
                   </ListItemIcon>
@@ -80,7 +89,6 @@ const Content = () => {
                 </ListItemButton>
               </ListItem>
               <Divider />
-
             </div>
           )
         })}
