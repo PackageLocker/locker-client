@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -9,14 +9,35 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
-import { getPackges } from '../packages'
 import DeleteDiaglog from '../components/DeleteDiaglog';
+import api from '../api/posts'
 
 const Content = () => {
   const navigate = useNavigate();
   const [alert, setAlert] = useState(false);
   const [id, setId] = useState();
-  const [packages, setPackages] = useState(getPackges());
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await api.get('/packages');
+        setPackages(response.data);
+        console.log(packages);
+      } catch (err) {
+        if (err.response) {
+          // Not in the 200 response range
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+        } else {
+          console.log(`Error: ${err.message}`);
+        }
+      }
+    }
+
+    fetchPosts();
+  }, [])
 
   const handleClick = (available, lockerId) => {
     if (available) {

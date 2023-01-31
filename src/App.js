@@ -14,14 +14,14 @@ const App = () => {
 
 export default App
 
-//   // useEffect(() => {
-//   //   // code to get data from backend database
-//   //   fetch("/api/packages", {
-//   //     method: 'GET',
-//   //     mode: 'cors'
-//   //   }).then(response =>
-//   //     response.json().then(data => {
-//   //       console.log(data.packages);
-//   //     })
-//   //   );
-//   // }, []);
+  // useEffect(() => {
+  //   // code to get data from backend database
+  //   fetch("/api/packages", {
+  //     method: 'GET',
+  //     mode: 'cors'
+  //   }).then(response =>
+  //     response.json().then(data => {
+  //       console.log(data.packages);
+  //     })
+  //   );
+  // }, []);
