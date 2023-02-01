@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
 import DeleteDiaglog from '../components/DeleteDiaglog';
+import Typography from '@mui/material/Typography';
 import api from '../api/posts'
 
 const Content = () => {
@@ -17,25 +18,30 @@ const Content = () => {
   const [alert, setAlert] = useState(false);
   const [id, setId] = useState();
   const [packages, setPackages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await api.get('/packages');
+      setPackages(response.data);
+      console.log(response.data);
+    } catch (err) {
+      if (err.response) {
+        // Not in the 200 response range
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else {
+        console.log(`Error: ${err.message}`);
+      }
+      setFetchError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await api.get('/packages');
-        setPackages(response.data);
-        console.log(packages);
-      } catch (err) {
-        if (err.response) {
-          // Not in the 200 response range
-          console.log(err.response.data);
-          console.log(err.response.status);
-          console.log(err.response.headers);
-        } else {
-          console.log(`Error: ${err.message}`);
-        }
-      }
-    }
-
     fetchPosts();
   }, [])
 
@@ -54,13 +60,27 @@ const Content = () => {
     setId();
   }
 
-  const handleConfirm = () => {
-    setAlert(false);
-    setId();
+  const handleConfirm = async () => {
+    try {
+      await api.delete('delete', {
+        data: {
+          locker_id: id
+        }
+      });
+      setPackages([]);
+      await fetchPosts();
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    } finally {
+      setAlert(false);
+      setId();
+    }
   }
 
   return (
     <>
+      {isLoading && <Typography variant="overline">Loading Packages...</Typography>}
+      {fetchError && <Typography variant="overline" color="error">{`Error: ${fetchError}`}</Typography>}
       <List>
         {packages.map((item) => {
           return (
@@ -72,7 +92,16 @@ const Content = () => {
                   </IconButton>
                 }
               >
-                <ListItemButton disabled={item.available} onClick={() => navigate('details/' + item.locker_id)}>
+                <ListItemButton
+                  disabled={item.available}
+                  onClick={() => navigate(
+                    `details/${item.locker_id}`,
+                    {
+                      state: {
+                        data: item
+                      }
+                    })
+                  }>
                   <ListItemIcon>
                     {item.locker_id}
                   </ListItemIcon>
@@ -80,7 +109,6 @@ const Content = () => {
                 </ListItemButton>
               </ListItem>
               <Divider />
-
             </div>
           )
         })}

@@ -1,45 +1,37 @@
 import React, { useState } from 'react'
-import { useParams } from "react-router-dom";
 import Header from '../components/Header';
-import { getDetails } from '../packages'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import DeleteDiaglog from '../components/DeleteDiaglog';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import api from '../api/posts'
 
 const PackageDetails = () => {
-  const [alert, setAlert] = useState(false);
-  const [id, setId] = useState();
-
-  const { lockerId } = useParams();
-  const data = getDetails(lockerId);
+  const { state } = useLocation();
+  const { data } = state;
   const navigate = useNavigate();
 
-  const handleClick = (available, lockerId) => {
-    if (available) {
-      navigate('new/' + lockerId);
+  const [alert, setAlert] = useState(false);
+
+  const handleConfirm = async () => {
+    try {
+      await api.delete('delete', {
+        data: {
+          locker_id: data.locker_id
+        }
+      });
+      navigate('/');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
     }
-    else {
-      setAlert(true);
-      setId(lockerId);
-    }
+    setAlert(false);
   }
 
-  const handleCancel = () => {
-    setAlert(false);
-    setId();
-  }
-
-  const handleConfirm = () => {
-    // TODO: delete entry
-    setAlert(false);
-    setId();
-  }
   return (
     <div>
-      <Header text={"Locker " + lockerId} root={false} />
+      <Header text={`Locker ${data.locker_id}`} root={false} />
       <List>
         <ListItem>
           <ListItemText>Name: {data.name}</ListItemText>
@@ -54,11 +46,11 @@ const PackageDetails = () => {
           <ListItemText>Package #{data.package_id}</ListItemText>
         </ListItem>
       </List>
-      <Button onClick={() => handleClick(data.available, data.locker_id)} variant="outlined" color="error">DELETE</Button>
+      <Button onClick={() => setAlert(true)} variant="outlined" color="error">DELETE</Button>
       <DeleteDiaglog
-        id={id}
+        id={data.locker_id}
         open={alert}
-        handleCancel={handleCancel}
+        handleCancel={() => setAlert(false)}
         handleConfirm={handleConfirm}
       />
     </div >
