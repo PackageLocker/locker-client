@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
 import DeleteDiaglog from '../components/DeleteDiaglog';
+import Typography from '@mui/material/Typography';
 import api from '../api/posts'
 
 const Content = () => {
@@ -17,6 +18,8 @@ const Content = () => {
   const [alert, setAlert] = useState(false);
   const [id, setId] = useState();
   const [packages, setPackages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
 
   const fetchPosts = async () => {
     try {
@@ -32,6 +35,9 @@ const Content = () => {
       } else {
         console.log(`Error: ${err.message}`);
       }
+      setFetchError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -73,6 +79,8 @@ const Content = () => {
 
   return (
     <>
+      {isLoading && <Typography variant="overline">Loading Packages...</Typography>}
+      {fetchError && <Typography variant="overline" color="error">{`Error: ${fetchError}`}</Typography>}
       <List>
         {packages.map((item) => {
           return (
