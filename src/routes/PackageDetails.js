@@ -16,10 +16,11 @@ const PackageDetails = () => {
   const [alert, setAlert] = useState(false);
 
   const handleConfirm = async () => {
-    // TODO: delete entry
     try {
       await api.delete('delete', {
-        "locker_id": "1"
+        data: {
+          locker_id: data.locker_id
+        }
       });
       navigate('/');
     } catch (err) {
