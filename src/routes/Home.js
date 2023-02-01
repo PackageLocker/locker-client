@@ -18,24 +18,24 @@ const Content = () => {
   const [id, setId] = useState();
   const [packages, setPackages] = useState([]);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await api.get('/packages');
-        setPackages(response.data);
-        console.log(response.data);
-      } catch (err) {
-        if (err.response) {
-          // Not in the 200 response range
-          console.log(err.response.data);
-          console.log(err.response.status);
-          console.log(err.response.headers);
-        } else {
-          console.log(`Error: ${err.message}`);
-        }
+  const fetchPosts = async () => {
+    try {
+      const response = await api.get('/packages');
+      setPackages(response.data);
+      console.log(response.data);
+    } catch (err) {
+      if (err.response) {
+        // Not in the 200 response range
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else {
+        console.log(`Error: ${err.message}`);
       }
     }
+  }
 
+  useEffect(() => {
     fetchPosts();
   }, [])
 
@@ -54,9 +54,21 @@ const Content = () => {
     setId();
   }
 
-  const handleConfirm = () => {
-    setAlert(false);
-    setId();
+  const handleConfirm = async () => {
+    try {
+      await api.delete('delete', {
+        data: {
+          locker_id: id
+        }
+      });
+      setPackages([]);
+      await fetchPosts();
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    } finally {
+      setAlert(false);
+      setId();
+    }
   }
 
   return (

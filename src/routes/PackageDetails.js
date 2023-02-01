@@ -6,36 +6,28 @@ import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import DeleteDiaglog from '../components/DeleteDiaglog';
 import { useNavigate, useLocation } from "react-router-dom";
+import api from '../api/posts'
 
 const PackageDetails = () => {
   const { state } = useLocation();
   const { data } = state;
-
-  const [alert, setAlert] = useState(false);
-  const [id, setId] = useState();
-
   const navigate = useNavigate();
 
-  const handleClick = (available, lockerId) => {
-    if (available) {
-      navigate('new/' + lockerId);
-    }
-    else {
-      setAlert(true);
-      setId(lockerId);
-    }
-  }
+  const [alert, setAlert] = useState(false);
 
-  const handleCancel = () => {
-    setAlert(false);
-    setId();
-  }
-
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     // TODO: delete entry
+    try {
+      await api.delete('delete', {
+        "locker_id": "1"
+      });
+      navigate('/');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
     setAlert(false);
-    setId();
   }
+
   return (
     <div>
       <Header text={`Locker ${data.locker_id}`} root={false} />
@@ -53,11 +45,11 @@ const PackageDetails = () => {
           <ListItemText>Package #{data.package_id}</ListItemText>
         </ListItem>
       </List>
-      <Button onClick={() => handleClick(data.available, data.locker_id)} variant="outlined" color="error">DELETE</Button>
+      <Button onClick={() => setAlert(true)} variant="outlined" color="error">DELETE</Button>
       <DeleteDiaglog
-        id={id}
+        id={data.locker_id}
         open={alert}
-        handleCancel={handleCancel}
+        handleCancel={() => setAlert(false)}
         handleConfirm={handleConfirm}
       />
     </div >
