@@ -5,6 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import DeleteDiaglog from '../components/DeleteDiaglog';
+import Typography from '@mui/material/Typography';
 import { useNavigate, useLocation } from "react-router-dom";
 import api from '../api/posts'
 
@@ -14,9 +15,12 @@ const PackageDetails = () => {
   const navigate = useNavigate();
 
   const [alert, setAlert] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
 
   const handleConfirm = async () => {
     try {
+      setIsDeleting(true);
       await api.delete('delete', {
         data: {
           locker_id: data.locker_id
@@ -24,14 +28,18 @@ const PackageDetails = () => {
       });
       navigate('/');
     } catch (err) {
+      setDeleteError(err.message);
       console.log(`Error: ${err.message}`);
+    } finally {
+      setAlert(false);
+      setIsDeleting(false);
     }
-    setAlert(false);
   }
 
   return (
     <div>
       <Header text={`Locker ${data.locker_id}`} root={false} />
+      {deleteError && <Typography variant="overline" color="error">{`Delete Error: ${deleteError}`}</Typography>}
       <List>
         <ListItem>
           <ListItemText>Name: {data.name}</ListItemText>
@@ -52,6 +60,7 @@ const PackageDetails = () => {
         open={alert}
         handleCancel={() => setAlert(false)}
         handleConfirm={handleConfirm}
+        isDeleting={isDeleting}
       />
     </div >
   )

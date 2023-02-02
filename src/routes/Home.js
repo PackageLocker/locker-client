@@ -18,8 +18,10 @@ const Content = () => {
   const [alert, setAlert] = useState(false);
   const [id, setId] = useState();
   const [packages, setPackages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFetchLoading, setIsFetchLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
 
   const fetchPosts = async () => {
     try {
@@ -37,7 +39,7 @@ const Content = () => {
       }
       setFetchError(err.message);
     } finally {
-      setIsLoading(false);
+      setIsFetchLoading(false);
     }
   }
 
@@ -62,6 +64,7 @@ const Content = () => {
 
   const handleConfirm = async () => {
     try {
+      setIsDeleting(true);
       await api.delete('delete', {
         data: {
           locker_id: id
@@ -70,17 +73,20 @@ const Content = () => {
       setPackages([]);
       await fetchPosts();
     } catch (err) {
+      setDeleteError(err.message);
       console.log(`Error: ${err.message}`);
     } finally {
       setAlert(false);
       setId();
+      setIsDeleting(false);
     }
   }
 
   return (
     <>
-      {isLoading && <Typography variant="overline">Loading Packages...</Typography>}
+      {isFetchLoading && <Typography variant="overline">Loading Packages...</Typography>}
       {fetchError && <Typography variant="overline" color="error">{`Error: ${fetchError}`}</Typography>}
+      {deleteError && <Typography variant="overline" color="error">{`Delete Error: ${deleteError}`}</Typography>}
       <List>
         {packages.map((item) => {
           return (
@@ -118,6 +124,7 @@ const Content = () => {
         open={alert}
         handleCancel={handleCancel}
         handleConfirm={handleConfirm}
+        isDeleting={isDeleting}
       />
     </>
   )

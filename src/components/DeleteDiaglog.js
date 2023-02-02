@@ -6,7 +6,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-const DeleteDiaglog = ({ id, open, handleCancel, handleConfirm }) => {
+const DeleteDiaglog = ({ id, open, handleCancel, handleConfirm, isDeleting }) => {
 
   return (
     <Dialog
@@ -20,12 +20,12 @@ const DeleteDiaglog = ({ id, open, handleCancel, handleConfirm }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Please confirm that locker {id} is empty.
+          {isDeleting ? "Deleting..." : `Please confirm that locker ${id} is empty.`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleConfirm} color="error">
+        <Button onClick={handleCancel} disabled={isDeleting}>Cancel</Button>
+        <Button onClick={handleConfirm} color="error" disabled={isDeleting}>
           Confirm
         </Button>
       </DialogActions>
