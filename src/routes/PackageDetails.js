@@ -51,13 +51,21 @@ const PackageDetails = () => {
           <ListItemText>Student ID: {data.student_id}</ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemText>Package #{data.package_id}</ListItemText>
+          <ListItemText>Package # {data.package_id}</ListItemText>
         </ListItem>
         <ListItem>
           <ListItemText>Delivery Time: {new Date(data.timestamp).toLocaleString()}</ListItemText>
         </ListItem>
       </List>
-      <Button onClick={() => setAlert(true)} variant="outlined" color="error" disabled={isDeleting}>DELETE</Button>
+      <Button
+        onClick={() => setAlert(true)}
+        variant="outlined"
+        color="error"
+        disabled={isDeleting}
+        sx={{ mx: 2 }}
+      >
+        DELETE
+      </Button>
       <DeleteDiaglog
         id={data.locker_id}
         open={alert}

@@ -13,14 +13,14 @@ const DeleteDiaglog = ({ id, open, handleCancel, handleConfirm, isDeleting }) =>
     <Dialog
       open={open}
       onClose={handleCancel}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby={`Delete entry from locker ${id}?`}
+      aria-describedby={`Please confirm that locker ${id} is empty.`}
     >
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle>
         Delete entry from locker #{id}?
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText>
           {`Please confirm that locker ${id} is empty.`}
         </DialogContentText>
       </DialogContent>
