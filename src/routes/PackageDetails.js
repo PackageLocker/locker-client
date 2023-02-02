@@ -53,6 +53,9 @@ const PackageDetails = () => {
         <ListItem>
           <ListItemText>Package #{data.package_id}</ListItemText>
         </ListItem>
+        <ListItem>
+          <ListItemText>Delivery Time: {new Date(data.timestamp).toLocaleString()}</ListItemText>
+        </ListItem>
       </List>
       <Button onClick={() => setAlert(true)} variant="outlined" color="error">DELETE</Button>
       <DeleteDiaglog
