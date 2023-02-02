@@ -57,7 +57,7 @@ const PackageDetails = () => {
           <ListItemText>Delivery Time: {new Date(data.timestamp).toLocaleString()}</ListItemText>
         </ListItem>
       </List>
-      <Button onClick={() => setAlert(true)} variant="outlined" color="error">DELETE</Button>
+      <Button onClick={() => setAlert(true)} variant="outlined" color="error" disabled={isDeleting}>DELETE</Button>
       <DeleteDiaglog
         id={data.locker_id}
         open={alert}
