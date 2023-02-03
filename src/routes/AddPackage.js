@@ -65,7 +65,7 @@ const AddPackage = () => {
 
   return (
     <>
-      <Header text={"Locker " + lockerId} root={false} />
+      <Header text={`Locker ${lockerId}`} root={false} id={lockerId} />
       {postError && <Typography variant="overline" color="error">{`Post Error: ${postError}`}</Typography>}
       <Box
         component="form"

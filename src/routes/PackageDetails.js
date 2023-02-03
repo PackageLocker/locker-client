@@ -38,7 +38,7 @@ const PackageDetails = () => {
 
   return (
     <div>
-      <Header text={`Locker ${data.locker_id}`} root={false} />
+      <Header text={`Locker ${data.locker_id}`} root={false} id={data.locker_id} />
       {deleteError && <Typography variant="overline" color="error">{`Delete Error: ${deleteError}`}</Typography>}
       <List>
         <ListItem>

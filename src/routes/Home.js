@@ -27,7 +27,6 @@ const Content = () => {
     try {
       const response = await api.get('/packages');
       setPackages(response.data);
-      console.log(response.data);
     } catch (err) {
       if (err.response) {
         // Not in the 200 response range
@@ -49,7 +48,7 @@ const Content = () => {
 
   const handleClick = (available, lockerId) => {
     if (available) {
-      navigate('new/' + lockerId);
+      navigate(`new/${lockerId}`);
     }
     else {
       setAlert(true);
@@ -99,14 +98,15 @@ const Content = () => {
                 }
               >
                 <ListItemButton
-                  disabled={item.available}
-                  onClick={() => navigate(
-                    `details/${item.locker_id}`,
-                    {
-                      state: {
-                        data: item
-                      }
-                    })
+                  onClick={() => item.available ?
+                    navigate(`new/${item.locker_id}`)
+                    :
+                    navigate(`details/${item.locker_id}`,
+                      {
+                        state: {
+                          data: item
+                        }
+                      })
                   }>
                   <ListItemIcon>
                     {item.locker_id}
