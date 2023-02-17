@@ -70,7 +70,6 @@ const AddPackage = () => {
       <Box
         component="form"
         sx={{ my: 2, mx: 1, width: '30ch' }}
-        noValidate
         autoComplete="off"
       >
         <InputField
@@ -126,7 +125,7 @@ const AddPackage = () => {
         onClick={handleAddPackage}
         variant="outlined"
         color="inherit"
-        disabled={isPosting || name === "" || email === "" || studentId === "" || packageId === ""}
+        disabled={isPosting || name === "" || email === "" || studentId === "" || packageId === "" || }
         sx={{ mx: 2 }}
       >
         Submit
