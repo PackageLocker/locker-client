@@ -10,11 +10,11 @@ const InputField = ({ label, value, setValue, inputProps }) => {
     errorMessage = "This field is required";
     error = true;
   } 
-  if (label !== "Email" && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value))) {
+  if (label === "Email" && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value))) {
     errorMessage = "Please enter a valid email address";
     error = true;
   }
-  if (label === "Student ID" && value.length !== 9) {
+  if (label === "Student ID" && value.length !== 7) {
     errorMessage = "Please enter a valid student ID";
     error = true;
   }
