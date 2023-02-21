@@ -8,13 +8,14 @@ import Divider from '@mui/material/Divider';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import DeleteDiaglog from './DeleteDiaglog';
 import Typography from '@mui/material/Typography';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Content = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
 
   const [alert, setAlert] = useState(false);
@@ -37,6 +38,9 @@ const Content = () => {
         console.log(err.response.headers);
       } else {
         console.log(`Error: ${err.message}`);
+      }
+      if (err.response.status === 401) {
+        navigate('/login', { state: { from: location }, replace: true })
       }
       setFetchError(err.message);
     } finally {
@@ -76,6 +80,9 @@ const Content = () => {
     } catch (err) {
       setDeleteError(err.message);
       console.log(`Error: ${err.message}`);
+      if (err.response.status === 401) {
+        navigate('/login', { state: { from: location }, replace: true })
+      }
     } finally {
       setAlert(false);
       setId();

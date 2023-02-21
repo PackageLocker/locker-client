@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,6 +17,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Header = ({ text, root, id }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
   const axiosPrivate = useAxiosPrivate();
@@ -27,6 +28,9 @@ const Header = ({ text, root, id }) => {
       await axiosPrivate.post('unlock', { locker_id: id })
     } catch (err) {
       console.log(`Error: ${err.message}`);
+      if (err.response.status === 401) {
+        navigate('/login', { state: { from: location }, replace: true })
+      }
     } finally {
       setOpen(false);
       setIsOpening(false);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Header from '../components/Header';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -17,6 +17,7 @@ import InputField from '../components/InputField';
 const AddPackage = () => {
   const { lockerId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
 
   const [isPosting, setIsPosting] = useState(false);
@@ -49,6 +50,9 @@ const AddPackage = () => {
     } catch (err) {
       setPostError(err.message);
       console.log(`Error: ${err.message}`);
+      if (err.response.status === 401) {
+        navigate('/login', { state: { from: location }, replace: true })
+      }
     } finally {
       setIsPosting(false);
     }

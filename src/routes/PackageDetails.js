@@ -12,6 +12,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 const PackageDetails = () => {
   const { state } = useLocation();
   const { data } = state;
+  const location = useLocation();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
 
@@ -31,6 +32,9 @@ const PackageDetails = () => {
     } catch (err) {
       setDeleteError(err.message);
       console.log(`Error: ${err.message}`);
+      if (err.response.status === 401) {
+        navigate('/login', { state: { from: location }, replace: true })
+      }
     } finally {
       setAlert(false);
       setIsDeleting(false);
