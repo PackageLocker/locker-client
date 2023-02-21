@@ -1,14 +1,10 @@
 import React from 'react'
-import Content from './routes/Home';
-import Header from './components/Header'
+import Home from './routes/Home'
 
 const App = () => {
 
   return (
-    <div>
-      <Header text="Package Locker" root={true} />
-      <Content />
-    </div>
+    <Home />
   )
 }
 
