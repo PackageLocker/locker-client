@@ -11,10 +11,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
 import DeleteDiaglog from './DeleteDiaglog';
 import Typography from '@mui/material/Typography';
-import api from '../api/posts'
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Content = () => {
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+
   const [alert, setAlert] = useState(false);
   const [id, setId] = useState();
   const [packages, setPackages] = useState([]);
@@ -25,7 +27,7 @@ const Content = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await api.get('/packages');
+      const response = await axiosPrivate.get('/packages');
       setPackages(response.data);
     } catch (err) {
       if (err.response) {
@@ -64,7 +66,7 @@ const Content = () => {
   const handleConfirm = async () => {
     try {
       setIsDeleting(true);
-      await api.delete('delete', {
+      await axiosPrivate.delete('delete', {
         data: {
           locker_id: id
         }

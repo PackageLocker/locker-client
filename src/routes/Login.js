@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
-import InputField from './InputField';
-import Header from './Header';
+import InputField from '../components/InputField';
+import Header from '../components/Header';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';

@@ -12,18 +12,19 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import api from '../api/posts'
 import CircularProgress from '@mui/material/CircularProgress';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Header = ({ text, root, id }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
+  const axiosPrivate = useAxiosPrivate();
 
   const handleConfirm = async () => {
     try {
       setIsOpening(true);
-      await api.post('unlock', { locker_id: id })
+      await axiosPrivate.post('unlock', { locker_id: id })
     } catch (err) {
       console.log(`Error: ${err.message}`);
     } finally {

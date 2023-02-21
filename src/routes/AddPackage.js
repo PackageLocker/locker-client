@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../components/Header';
 import { useNavigate, useParams } from "react-router-dom";
-import api from '../api/posts'
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,6 +17,7 @@ import InputField from '../components/InputField';
 const AddPackage = () => {
   const { lockerId } = useParams();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   const [isPosting, setIsPosting] = useState(false);
   const [postError, setPostError] = useState(null);
@@ -43,7 +44,7 @@ const AddPackage = () => {
         email: email,
         timestamp: Date.now()
       }
-      await api.post('new', newPackage)
+      await axiosPrivate.post('new', newPackage)
       navigate('/');
     } catch (err) {
       setPostError(err.message);

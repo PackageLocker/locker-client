@@ -1,6 +1,6 @@
 import React from 'react'
 import Home from './routes/Home'
-import Login from './components/Login'
+import Login from './routes/Login'
 import RequireAuth from './components/RequireAuth'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'

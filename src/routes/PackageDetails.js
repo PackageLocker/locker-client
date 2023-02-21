@@ -7,12 +7,13 @@ import Button from '@mui/material/Button';
 import DeleteDiaglog from '../components/DeleteDiaglog';
 import Typography from '@mui/material/Typography';
 import { useNavigate, useLocation } from "react-router-dom";
-import api from '../api/posts'
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const PackageDetails = () => {
   const { state } = useLocation();
   const { data } = state;
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   const [alert, setAlert] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -21,7 +22,7 @@ const PackageDetails = () => {
   const handleConfirm = async () => {
     try {
       setIsDeleting(true);
-      await api.delete('delete', {
+      await axiosPrivate.delete('delete', {
         data: {
           locker_id: data.locker_id
         }
