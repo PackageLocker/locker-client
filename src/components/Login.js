@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
+import AuthContext from '../context/AuthProvider';
 import Typography from '@mui/material/Typography';
 import InputField from './InputField';
 import Header from './Header';
@@ -8,10 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
+import axios from '../api/posts'
 
 const Login = () => {
-  // const userRef = useRef();
-  const errRef = useRef();
+  const { setAuth } = useContext(AuthContext);
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
@@ -20,26 +21,38 @@ const Login = () => {
   const [success, setSuccess] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, [])
-
-  // useEffect(() => {
-  //   setErrMsg('');
-  // }, [user, pwd])
-
   const handleClickShowPassword = () => setShowPwd((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const handleSubmit = () => {
-    console.log("login!")
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('auth', {}, {
+        auth: {
+          username: user,
+          password: pwd
+        }
+      });
+      const accessToken = response?.data?.token;
+      setAuth({ user, pwd, accessToken });
+      setUser('');
+      setPwd('');
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthorized');
+      } else {
+        setErrMsg('Login Failed');
+      }
+    }
   }
 
   return (
-    <div>
+    <>
       <Header text="Sign In" root={true} />
       <div>
         {errMsg && <Typography variant="overline" color="error">{`${errMsg}`}</Typography>}
@@ -71,19 +84,17 @@ const Login = () => {
               </InputAdornment>
           }}
         />
-        <div>
-          <Button
-            onClick={handleSubmit}
-            variant="outlined"
-            color="inherit"
-            disabled={isFetching || user === "" || pwd === ""}
-            sx={{ mt: 2 }}
-          >
-            Sign In
-          </Button>
-        </div>
       </div>
-    </div >
+      <Button
+        onClick={handleSubmit}
+        variant="outlined"
+        color="inherit"
+        disabled={isFetching || user === "" || pwd === ""}
+        sx={{ mt: 2 }}
+      >
+        Sign In
+      </Button>
+    </>
   )
 }
 

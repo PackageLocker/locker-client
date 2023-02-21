@@ -8,6 +8,7 @@ import {
 import ErrorPage from "./routes/ErrorPage"
 import PackageDetails from './routes/PackageDetails';
 import AddPackage from './routes/AddPackage';
+import { AuthProvider } from './context/AuthProvider';
 
 const router = createBrowserRouter([
     {
@@ -27,5 +28,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <RouterProvider router={router} />
+    <AuthProvider>
+        <RouterProvider router={router} />
+    </AuthProvider>
 );
