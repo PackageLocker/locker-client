@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header';
 import { useNavigate, useParams } from "react-router-dom";
 import api from '../api/posts'

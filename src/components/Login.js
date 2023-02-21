@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import useAuth from '../hooks/useAuth';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import InputField from './InputField';
 import Header from './Header';
