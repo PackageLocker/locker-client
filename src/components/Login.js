@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react'
-import AuthContext from '../context/AuthProvider';
+import React, { useState } from 'react'
+import useAuth from '../hooks/useAuth';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import InputField from './InputField';
 import Header from './Header';
@@ -12,13 +13,16 @@ import Button from '@mui/material/Button';
 import axios from '../api/posts'
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   const handleClickShowPassword = () => setShowPwd((show) => !show);
@@ -40,7 +44,7 @@ const Login = () => {
       setAuth({ user, pwd, accessToken });
       setUser('');
       setPwd('');
-      setSuccess(true);
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
