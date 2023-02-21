@@ -62,7 +62,7 @@ This is the front-end client application for the package locker system, which is
 	sudo systemctl restart nginx
 	```
 
-## Deploy Application (On Dev Machine)
+## Deploy Application (On OSX Dev Machine)
 
 *make sure the IP address is set correctly in `deploy.sh`*
 
