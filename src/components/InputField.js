@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 const InputField = ({ label, value, setValue, inputProps }) => {
   return (
     <>
-
       <TextField
         required
         variant='standard'
