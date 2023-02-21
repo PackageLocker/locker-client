@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import useAuth from '../hooks/useAuth';
+import axios from '../api/posts'
 import { useNavigate, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import InputField from '../components/InputField';
@@ -10,7 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import axios from '../api/posts'
 
 const Login = () => {
   const { setAuth } = useAuth();

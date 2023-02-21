@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Header from '../components/Header';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import Header from '../components/Header';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,8 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import Html5QrcodePlugin from "../components/Html5QrcodePlugin";
 import InputField from '../components/InputField';
+import Html5QrcodePlugin from "../components/Html5QrcodePlugin";
 
 const AddPackage = () => {
   const { lockerId } = useParams();
