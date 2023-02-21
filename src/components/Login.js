@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import AuthContext from '../context/AuthProvider';
 import Typography from '@mui/material/Typography';
 import InputField from './InputField';
@@ -29,6 +29,7 @@ const Login = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsFetching(true);
       const response = await axios.post('auth', {}, {
         auth: {
           username: user,
@@ -48,20 +49,22 @@ const Login = () => {
       } else {
         setErrMsg('Login Failed');
       }
+    } finally {
+      setIsFetching(false);
     }
   }
 
   return (
     <>
       <Header text="Sign In" root={true} />
+      {errMsg && <Typography variant="overline" color="error">{`${errMsg}`}</Typography>}
       <div>
-        {errMsg && <Typography variant="overline" color="error">{`${errMsg}`}</Typography>}
-
         <InputField
           label="Username"
           value={user}
           setValue={(event) => setUser(event.target.value)}
         />
+        <br />
         <TextField
           required
           variant='standard'
