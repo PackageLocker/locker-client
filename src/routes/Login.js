@@ -49,7 +49,7 @@ const Login = () => {
       if (!err?.response) {
         setErrMsg('No Server Response');
       } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
+        setErrMsg(`Unauthorized: ${err.response.data}`);
       } else {
         setErrMsg('Login Failed');
       }
