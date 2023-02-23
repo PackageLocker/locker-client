@@ -38,6 +38,7 @@ This is the front-end client application for the package locker system, which is
         	location / {
               	   root /var/www/locker-client;
              	   index index.html;
+		   try_files $uri /index.html;
 		}
 
 		location /api {
