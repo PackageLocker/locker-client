@@ -36,9 +36,9 @@ This is the front-end client application for the package locker system, which is
         	ssl_certificate_key /etc/nginx/ssl/locker.key;
 
         	location / {
-              	   root /var/www/locker-client;
-             	   index index.html;
-		   try_files $uri /index.html;
+			root /var/www/locker-client;
+             	  	index index.html;
+		  	try_files $uri /index.html;
 		}
 
 		location /api {
