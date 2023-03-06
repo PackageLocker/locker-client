@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -99,7 +100,7 @@ const Login = () => {
         disabled={isFetching || user === "" || pwd === ""}
         sx={{ mt: 2 }}
       >
-        Sign In
+        {isFetching ? <CircularProgress size={20} /> : "Sign In"}
       </Button>
     </>
   )
