@@ -22,11 +22,70 @@ const AddPackage = () => {
 
   const [isPosting, setIsPosting] = useState(false);
   const [postError, setPostError] = useState(null);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [studentId, setStudentId] = useState("");
-  const [packageId, setPackageId] = useState("");
   const [scannerOpen, setScannerOpen] = useState(false);
+
+  const [name, setName] = useState("");
+  const [nameValid, setNameValid] = useState(true);
+  const [nameErr, setNameErr] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(true);
+  const [emailErr, setEmailErr] = useState("");
+  const [studentId, setStudentId] = useState("");
+  const [studentIdValid, setStudentIdValid] = useState(true);
+  const [studentIdErr, setStudentIdErr] = useState("");
+  const [packageId, setPackageId] = useState("");
+  const [packageIdValid, setPackageIdValid] = useState(true);
+  const [packageIdErr, setPackageIdErr] = useState("");
+
+  const handleName = (e) => {
+    setName(e.target.value);
+    if (!e.target.value) {
+      setNameValid(false);
+      setNameErr("Name cannot be empty.");
+    } else {
+      setNameValid(true);
+      setNameErr("");
+    }
+  }
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    if (!e.target.value) {
+      setEmailValid(false);
+      setEmailErr("Email cannot be empty.");
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)) {
+      setEmailValid(false);
+      setEmailErr("Invalid Email address.");
+    } else {
+      setEmailValid(true);
+      setEmailErr("");
+    }
+  }
+
+  const handleStudentId = (e) => {
+    setStudentId(e.target.value);
+    if (!e.target.value) {
+      setStudentIdValid(false);
+      setStudentIdErr("Student ID cannot be empty.");
+    } else if (!/^[0-9]+$/.test(e.target.value)) {
+      setStudentIdValid(false);
+      setStudentIdErr("Student ID can only contain numbers.");
+    } else {
+      setStudentIdValid(true);
+      setStudentIdErr("");
+    }
+  }
+
+  const handlePackageId = (e) => {
+    setPackageId(e.target.value);
+    if (!e.target.value) {
+      setPackageIdValid(false);
+      setPackageIdErr("Package number cannot be empty.");
+    } else {
+      setPackageIdValid(true);
+      setPackageIdErr("");
+    }
+  }
 
   const onNewScanResult = (decodedText, decodedResult) => {
     setPackageId(decodedText);
@@ -81,22 +140,30 @@ const AddPackage = () => {
         <InputField
           label="Name"
           value={name}
-          setValue={(event) => setName(event.target.value)}
+          setValue={handleName}
+          error={!nameValid}
+          errMsg={nameErr}
         />
         <InputField
           label="Email"
           value={email}
-          setValue={(event) => setEmail(event.target.value)}
+          setValue={handleEmail}
+          error={!emailValid}
+          errMsg={emailErr}
         />
         <InputField
           label="Student ID"
           value={studentId}
-          setValue={(event) => setStudentId(event.target.value)}
+          setValue={handleStudentId}
+          error={!studentIdValid}
+          errMsg={studentIdErr}
         />
         <InputField
           label="Package #"
           value={packageId}
-          setValue={(event) => setPackageId(event.target.value)}
+          setValue={handlePackageId}
+          error={!packageIdValid}
+          errMsg={packageIdErr}
           inputProps={{
             endAdornment: <InputAdornment position="end">
               <IconButton edge="end" aria-label="scanner" onClick={() => setScannerOpen(true)}>
@@ -131,7 +198,7 @@ const AddPackage = () => {
         onClick={handleAddPackage}
         variant="outlined"
         color="inherit"
-        disabled={isPosting || name === "" || email === "" || studentId === "" || packageId === ""}
+        disabled={isPosting || !nameValid || !emailValid || !studentIdValid || !packageIdValid}
         sx={{ mx: 2 }}
       >
         Submit
