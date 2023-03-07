@@ -48,8 +48,8 @@ const AddPackage = () => {
       await axiosPrivate.post('new', newPackage)
       navigate('/');
     } catch (err) {
-      setPostError(err.message);
-      console.log(`Error: ${err.message}`);
+      setPostError(err.response.data);
+      console.log(`Error: ${err.response.data}`);
       if (err.response.status === 401) {
         navigate('/login', { state: { from: location }, replace: true })
       }
