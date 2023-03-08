@@ -70,9 +70,15 @@ const Content = () => {
   const handleConfirm = async () => {
     try {
       setIsDeleting(true);
+      const item = packages.find(i => i.locker_id === id);
       await axiosPrivate.delete('delete', {
         data: {
-          locker_id: id
+          locker_id: id,
+          package_id: item.packageId,
+          name: item.name,
+          student_id: item.studentId,
+          email: item.email,
+          timestamp: Date.now()
         }
       });
       setPackages([]);

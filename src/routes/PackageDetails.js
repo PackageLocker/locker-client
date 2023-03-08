@@ -25,7 +25,12 @@ const PackageDetails = () => {
       setIsDeleting(true);
       await axiosPrivate.delete('delete', {
         data: {
-          locker_id: data.locker_id
+          locker_id: data.locker_id,
+          package_id: data.package_id,
+          name: data.name,
+          student_id: data.student_id,
+          email: data.email,
+          timestamp: Date.now()
         }
       });
       navigate('/');
