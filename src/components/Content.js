@@ -74,9 +74,9 @@ const Content = () => {
       await axiosPrivate.delete('delete', {
         data: {
           locker_id: id,
-          package_id: item.packageId,
+          package_id: item.package_id,
           name: item.name,
-          student_id: item.studentId,
+          student_id: item.student_id,
           email: item.email,
           timestamp: Date.now()
         }
