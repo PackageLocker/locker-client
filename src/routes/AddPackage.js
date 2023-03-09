@@ -13,6 +13,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import InputField from '../components/InputField';
 import Html5QrcodePlugin from "../components/Html5QrcodePlugin";
+import packages from '../data/packages.json'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const AddPackage = () => {
   const { lockerId } = useParams();
@@ -37,6 +42,8 @@ const AddPackage = () => {
   const [packageIdValid, setPackageIdValid] = useState(true);
   const [packageIdErr, setPackageIdErr] = useState("");
 
+  const [data, setData] = useState(null);
+
   const handleName = (e) => {
     setName(e.target.value);
     if (!e.target.value) {
@@ -53,7 +60,7 @@ const AddPackage = () => {
     if (!e.target.value) {
       setEmailValid(false);
       setEmailErr("Email cannot be empty.");
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)) {
+    } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)) {
       setEmailValid(false);
       setEmailErr("Invalid Email address.");
     } else {
@@ -85,12 +92,6 @@ const AddPackage = () => {
       setPackageIdValid(true);
       setPackageIdErr("");
     }
-  }
-
-  const onNewScanResult = (decodedText, decodedResult) => {
-    setPackageId(decodedText);
-    console.log(decodedText, decodedResult);
-    setScannerOpen(false);
   }
 
   const handleAddPackage = async () => {
@@ -125,6 +126,30 @@ const AddPackage = () => {
       width: qrboxSize,
       height: Math.floor(qrboxSize / 1.6)
     };
+  }
+
+  const onNewScanResult = (decodedText, decodedResult) => {
+    setPackageId(decodedText);
+    const found = packages.find(i => i.package_id === decodedText);
+    if (found) {
+      setData(found);
+    } else {
+      setData(null);
+      setScannerOpen(false);
+    }
+  }
+
+  const fillInfo = () => {
+    setName(data.name);
+    setEmail(data.email);
+    setStudentId(data.student_id);
+    setScannerOpen(false);
+    setData(null);
+  }
+
+  const handleCloseScanner = () => {
+    setData(null);
+    setScannerOpen(false);
   }
 
   return (
@@ -176,17 +201,40 @@ const AddPackage = () => {
 
       <Dialog
         open={scannerOpen}
-        onClose={() => setScannerOpen(false)}
+        onClose={handleCloseScanner}
         fullWidth={true}
       >
-        <Html5QrcodePlugin
-          fps={10}
-          qrbox={qrboxFunction}
-          disableFlip={false}
-          qrCodeSuccessCallback={onNewScanResult}
-        />
+        {data ?
+          <>
+            <DialogTitle>
+              Package Info Found!
+            </DialogTitle>
+            <List>
+              <ListItem>
+                <ListItemText>Name: {data.name}</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>Email: {data.email}</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>Student ID: {data.student_id}</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>Package # {data.package_id}</ListItemText>
+              </ListItem>
+            </List>
+          </>
+          :
+          <Html5QrcodePlugin
+            fps={10}
+            qrbox={qrboxFunction}
+            disableFlip={false}
+            qrCodeSuccessCallback={onNewScanResult}
+          />
+        }
         <DialogActions>
-          <Button onClick={() => setScannerOpen(false)}>Close</Button>
+          <Button onClick={handleCloseScanner}>Cancel</Button>
+          {data && <Button onClick={fillInfo}>Fill</Button>}
         </DialogActions>
       </Dialog>
 
