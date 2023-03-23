@@ -42,7 +42,7 @@ const Header = ({ text, root, id }) => {
       <AppBar position="static">
         <Toolbar>
           {root ? <></> :
-            <IconButton edge="start" aria-label="back" color="inherit" onClick={() => navigate('/')}>
+            <IconButton id="back" edge="start" aria-label="back" color="inherit" onClick={() => navigate('/')}>
               <ArrowBackIosIcon />
             </IconButton>
           }

@@ -136,7 +136,7 @@ const Content = () => {
         })}
       </List>
       <DeleteDiaglog
-        id={id}
+        locker_id={id}
         open={alert}
         handleCancel={handleCancel}
         handleConfirm={handleConfirm}
