@@ -164,6 +164,7 @@ const AddPackage = () => {
       >
         <InputField
           label="Name"
+          id="name"
           value={name}
           setValue={handleName}
           error={!nameValid}
@@ -171,6 +172,7 @@ const AddPackage = () => {
         />
         <InputField
           label="Email"
+          id="email"
           value={email}
           setValue={handleEmail}
           error={!emailValid}
@@ -178,6 +180,7 @@ const AddPackage = () => {
         />
         <InputField
           label="Student ID"
+          id="studentId"
           value={studentId}
           setValue={handleStudentId}
           error={!studentIdValid}
@@ -185,6 +188,7 @@ const AddPackage = () => {
         />
         <InputField
           label="Package #"
+          id="packageId"
           value={packageId}
           setValue={handlePackageId}
           error={!packageIdValid}
@@ -243,10 +247,11 @@ const AddPackage = () => {
           <CircularProgress size={20} />
         </Box>}
       <Button
+        id="submit"
         onClick={handleAddPackage}
         variant="outlined"
         color="inherit"
-        disabled={isPosting || !nameValid || !emailValid || !studentIdValid || !packageIdValid}
+        disabled={isPosting || !nameValid || !emailValid || !studentIdValid || !packageIdValid || name === '' || email === '' || studentId === '' || packageId === ''}
         sx={{ mx: 2 }}
       >
         Submit
