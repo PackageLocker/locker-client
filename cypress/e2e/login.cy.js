@@ -44,4 +44,35 @@ describe('Login page', () => {
 
     cy.get('[id="password"]').should('have.attr', 'type', 'password');
   })
+
+  context('Login submission', () => {
+    it('login failure', () => {
+      const username = 'username';
+      const password = 'password';
+
+      cy.get('[id="err"]').should('not.exist');
+
+      cy.get('[id="username"]').type(username);
+
+      cy.get('[id="password"]').type(password);
+
+      cy.get('[id="submit"]').click();
+
+      cy.get('[id="err"]').should('be.visible');
+    })
+
+    it('login success', () => {
+      const username = 'admin';
+      const password = '4admin';
+
+      cy.get('[id="username"]').type(username);
+
+      cy.get('[id="password"]').type(password);
+
+      cy.get('[id="submit"]').click();
+
+      cy.url().should('eq', 'http://localhost:3000/');
+    })
+  })
+
 })

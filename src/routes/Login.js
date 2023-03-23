@@ -62,7 +62,7 @@ const Login = () => {
   return (
     <>
       <Header text="Sign In" root={true} />
-      {errMsg && <Typography variant="overline" color="error">{`${errMsg}`}</Typography>}
+      {errMsg && <Typography id="err" variant="overline" color="error">{`${errMsg}`}</Typography>}
       <div>
         <InputField
           label="Username"
