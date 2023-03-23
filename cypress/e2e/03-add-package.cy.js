@@ -52,7 +52,17 @@ describe('Add package', () => {
 
   context('Package submission', () => {
     it('submission failure', () => {
+      cy.intercept('/new', { statusCode: 500 });
 
+      cy.get('[id="err"]').should('not.exist');
+
+      cy.get('[id="name"]').type('John Calvin');
+      cy.get('[id="email"]').type('jc@calvin.edu');
+      cy.get('[id="studentId"]').type('123456');
+      cy.get('[id="packageId"]').type('000000');
+      cy.get('[id="submit"]').click();
+
+      cy.get('[id="err"]').should('be.visible');
     })
 
     it('submission success', () => {

@@ -108,8 +108,8 @@ const AddPackage = () => {
       await axiosPrivate.post('new', newPackage)
       navigate('/');
     } catch (err) {
-      setPostError(err.response.data);
-      console.log(`Error: ${err.response.data}`);
+      setPostError(`Post Error: ${err.response.data || 'unknown'}`);
+      console.log(`Post Error: ${err.response.data || 'unknown'}`);
       if (err.response.status === 401) {
         navigate('/login', { state: { from: location }, replace: true })
       }
@@ -155,7 +155,7 @@ const AddPackage = () => {
   return (
     <>
       <Header text={`Locker ${lockerId}`} root={false} id={lockerId} />
-      {postError && <Typography variant="overline" color="error">{`Post Error: ${postError}`}</Typography>}
+      {postError && <Typography id="err" variant="overline" color="error">{`${postError}`}</Typography>}
       <Box
         component="form"
         sx={{ my: 2, mx: 1, width: '30ch' }}
