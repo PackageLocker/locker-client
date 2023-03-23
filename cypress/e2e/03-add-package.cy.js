@@ -56,6 +56,19 @@ describe('Add package', () => {
     cy.get('li span').first().should('have.text', '');
   })
 
+  it('unlock button unlocks locker', () => {
+    cy.get('[id="unlock-dialog"]').should('not.exist');
+    cy.get('[id="unlock"]').click();
+    cy.get('[id="unlock-dialog"]').should('be.visible');
+
+    cy.get('[id="cancel"]').click();
+    cy.get('[id="unlock-dialog"]').should('not.exist');
+
+    cy.get('[id="unlock"]').click();
+    cy.get('[id="confirm"]').click();
+    cy.get('[id="unlock-dialog"]').should('not.exist');
+  })
+
   context('Package submission', () => {
     it('submission failure', () => {
       cy.intercept('/new', { statusCode: 500 });

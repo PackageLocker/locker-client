@@ -50,6 +50,7 @@ const Header = ({ text, root, id }) => {
             {text}
           </Typography>
           {!root && <IconButton
+            id="unlock"
             size="large"
             color="inherit"
             aria-label="unlock"
@@ -60,6 +61,7 @@ const Header = ({ text, root, id }) => {
         </Toolbar>
       </AppBar>
       <Dialog
+        id="unlock-dialog"
         open={open}
         onClose={() => setOpen(false)}
       >
@@ -72,8 +74,8 @@ const Header = ({ text, root, id }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} disabled={isOpening}>Cancel</Button>
-          <Button onClick={handleConfirm} color="error" disabled={isOpening}>
+          <Button id="cancel" onClick={() => setOpen(false)} disabled={isOpening}>Cancel</Button>
+          <Button id="confirm" onClick={handleConfirm} color="error" disabled={isOpening}>
             {isOpening ? <CircularProgress size={20} /> : "Confirm"}
           </Button>
         </DialogActions>

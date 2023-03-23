@@ -5,6 +5,7 @@ describe('Login page', () => {
 
   it('redirects to log in page', () => {
     cy.url().should('eq', 'http://localhost:3000/login');
+    cy.get('header .MuiTypography-root').should('have.text', 'Sign In');
   })
 
   it('accepts inputs', () => {

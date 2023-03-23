@@ -13,10 +13,23 @@ describe('package details', () => {
     cy.get('[id="timestamp"] span').contains('Delivery Time');
   })
 
-  it('back arrbuttonow leads to home page', () => {
+  it('back button leads to home page', () => {
     cy.get('[id="back"]').click();
     cy.url().should('eq', 'http://localhost:3000/');
     cy.get('li span').first().should('have.text', 'John Calvin');
+  })
+
+  it('unlock button unlocks locker', () => {
+    cy.get('[id="unlock-dialog"]').should('not.exist');
+    cy.get('[id="unlock"]').click();
+    cy.get('[id="unlock-dialog"]').should('be.visible');
+
+    cy.get('[id="cancel"]').click();
+    cy.get('[id="unlock-dialog"]').should('not.exist');
+
+    cy.get('[id="unlock"]').click();
+    cy.get('[id="confirm"]').click();
+    cy.get('[id="unlock-dialog"]').should('not.exist');
   })
 
   it('can delete package information', () => {
