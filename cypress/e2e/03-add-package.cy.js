@@ -56,8 +56,13 @@ describe('Add package', () => {
     })
 
     it('submission success', () => {
-
-      // cy.url().should('eq', 'http://localhost:3000/');
+      cy.get('[id="name"]').type('John Calvin');
+      cy.get('[id="email"]').type('jc@calvin.edu');
+      cy.get('[id="studentId"]').type('123456');
+      cy.get('[id="packageId"]').type('000000');
+      cy.get('[id="submit"]').click();
+      cy.url().should('eq', 'http://localhost:3000/');
+      cy.get('li span').first().should('have.text', 'John Calvin');
     })
   })
 })
