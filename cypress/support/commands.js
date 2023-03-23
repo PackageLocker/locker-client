@@ -10,7 +10,15 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('login', () => {
+  cy.visit('/');
+  const username = 'admin';
+  const password = '4admin';
+  cy.get('[id="username"]').type(username);
+  cy.get('[id="password"]').type(password);
+  cy.get('[id="submit"]').click();
+  cy.url().should('eq', 'http://localhost:3000/');
+})
 //
 //
 // -- This is a child command --
