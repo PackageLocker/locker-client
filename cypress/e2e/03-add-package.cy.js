@@ -50,6 +50,12 @@ describe('Add package', () => {
     cy.get('[id="submit"]').should('not.be.disabled');
   })
 
+  it('back button leads to home page', () => {
+    cy.get('[id="back"]').click();
+    cy.url().should('eq', 'http://localhost:3000/');
+    cy.get('li span').first().should('have.text', '');
+  })
+
   context('Package submission', () => {
     it('submission failure', () => {
       cy.intercept('/new', { statusCode: 500 });

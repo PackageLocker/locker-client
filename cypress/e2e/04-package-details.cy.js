@@ -13,7 +13,7 @@ describe('package details', () => {
     cy.get('[id="timestamp"] span').contains('Delivery Time');
   })
 
-  it.only('back arrow leads to home page', () => {
+  it('back arrbuttonow leads to home page', () => {
     cy.get('[id="back"]').click();
     cy.url().should('eq', 'http://localhost:3000/');
     cy.get('li span').first().should('have.text', 'John Calvin');
