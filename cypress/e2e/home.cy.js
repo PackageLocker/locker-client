@@ -1,5 +1,5 @@
 describe('Home page', () => {
-  it.only('loads packages on page load', () => {
+  it('loads packages on page load', () => {
     cy.intercept('/packages', { fixture: 'packages.json' });
     cy.login();
 
@@ -27,5 +27,11 @@ describe('Home page', () => {
     cy.login();
 
     cy.get('[id="fetchErr"]').should('be.visible');
+  })
+
+  it('goes to add package page when clicked on empty space', () => {
+    cy.login();
+    cy.get('li').first().click();
+    cy.get('header .MuiTypography-root').should('have.text', 'Locker 1');
   })
 })
