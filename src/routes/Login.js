@@ -62,10 +62,11 @@ const Login = () => {
   return (
     <>
       <Header text="Sign In" root={true} />
-      {errMsg && <Typography variant="overline" color="error">{`${errMsg}`}</Typography>}
+      {errMsg && <Typography id="err" variant="overline" color="error">{`${errMsg}`}</Typography>}
       <div>
         <InputField
           label="Username"
+          id="username"
           value={user}
           setValue={(event) => setUser(event.target.value)}
         />
@@ -73,6 +74,7 @@ const Login = () => {
         <TextField
           required
           variant='standard'
+          id="password"
           sx={{ m: 1, width: '30ch' }}
           label="Password"
           value={pwd}
@@ -82,6 +84,7 @@ const Login = () => {
             endAdornment:
               <InputAdornment position="end" >
                 <IconButton
+                  id="visibility"
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
@@ -94,6 +97,7 @@ const Login = () => {
         />
       </div>
       <Button
+        id="submit"
         onClick={handleSubmit}
         variant="outlined"
         color="inherit"

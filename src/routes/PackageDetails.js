@@ -52,22 +52,23 @@ const PackageDetails = () => {
       {deleteError && <Typography variant="overline" color="error">{`Delete Error: ${deleteError}`}</Typography>}
       <List>
         <ListItem>
-          <ListItemText>Name: {data.name}</ListItemText>
+          <ListItemText id="name">Name: {data.name}</ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemText>Email: {data.email}</ListItemText>
+          <ListItemText id="email">Email: {data.email}</ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemText>Student ID: {data.student_id}</ListItemText>
+          <ListItemText id="studentId">Student ID: {data.student_id}</ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemText>Package # {data.package_id}</ListItemText>
+          <ListItemText id="packageId">Package # {data.package_id}</ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemText>Delivery Time: {new Date(data.timestamp).toLocaleString()}</ListItemText>
+          <ListItemText id="timestamp">Delivery Time: {new Date(data.timestamp).toLocaleString()}</ListItemText>
         </ListItem>
       </List>
       <Button
+        id="delete"
         onClick={() => setAlert(true)}
         variant="outlined"
         color="error"
@@ -77,7 +78,7 @@ const PackageDetails = () => {
         DELETE
       </Button>
       <DeleteDiaglog
-        id={data.locker_id}
+        locker_id={data.locker_id}
         open={alert}
         handleCancel={() => setAlert(false)}
         handleConfirm={handleConfirm}

@@ -1,0 +1,65 @@
+[
+  {
+    "available": true,
+    "email": "abc@abc.com",
+    "locker_id": 1,
+    "name": "John Calvin",
+    "package_id": "12345",
+    "student_id": "54321",
+    "timestamp": 0
+  },
+  {
+    "available": true,
+    "email": "",
+    "locker_id": 2,
+    "name": "",
+    "package_id": "",
+    "student_id": "",
+    "timestamp": 0
+  },
+  {
+    "available": true,
+    "email": "",
+    "locker_id": 3,
+    "name": "",
+    "package_id": "",
+    "student_id": "",
+    "timestamp": 0
+  },
+  {
+    "available": true,
+    "email": "",
+    "locker_id": 4,
+    "name": "",
+    "package_id": "",
+    "student_id": "",
+    "timestamp": 0
+  },
+  {
+    "available": true,
+    "email": "",
+    "locker_id": 5,
+    "name": "",
+    "package_id": "",
+    "student_id": "",
+    "timestamp": 0
+  },
+  {
+    "available": true,
+    "email": "",
+    "locker_id": 6,
+    "name": "",
+    "package_id": "",
+    "student_id": "",
+    "timestamp": 0
+  },
+  {
+    "available": true,
+    "email": "",
+    "locker_id": 7,
+    "name": "",
+    "package_id": "",
+    "student_id": "",
+    "timestamp": 0
+  }
+]

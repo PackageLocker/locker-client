@@ -100,8 +100,8 @@ const Content = () => {
   return (
     <>
       {isFetchLoading && <Typography variant="overline">Loading Packages...</Typography>}
-      {fetchError && <Typography variant="overline" color="error">{`Error: ${fetchError}`}</Typography>}
-      {deleteError && <Typography variant="overline" color="error">{`Delete Error: ${deleteError}`}</Typography>}
+      {fetchError && <Typography variant="overline" color="error" id="fetchErr">{`Error: ${fetchError}`}</Typography>}
+      {deleteError && <Typography variant="overline" color="error" id="deleteErr">{`Delete Error: ${deleteError}`}</Typography>}
       <List>
         {packages.map((item) => {
           return (
@@ -136,7 +136,7 @@ const Content = () => {
         })}
       </List>
       <DeleteDiaglog
-        id={id}
+        locker_id={id}
         open={alert}
         handleCancel={handleCancel}
         handleConfirm={handleConfirm}
